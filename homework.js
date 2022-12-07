@@ -9,10 +9,10 @@
 
 // Create Hamster class. Set name from parameter in constructor method
 class Hamster {
-  constructor(owner = "", name, price = 15) {
-    this.owner = owner;
+  static price = 15;
+  constructor(name, owner = "") {
     this.name = name;
-    this.price = price;
+    this.owner = owner;
   }
 
   wheelRun() {
@@ -59,18 +59,57 @@ class Person {
   greet() {
     console.log(`Hi! My name is ${this.name}`);
   }
-  eat() {
-    this.weight++;
-    this.mood++;
+  eat(amount) {
+    this.weight += amount;
+    this.mood += amount;
   }
-  exercise() {
-    this.weight--;
+  exercise(frequency) {
+    this.weight -= frequency;
   }
-  ageUp() {
-    this.age++;
-    this.height++;
-    this.weight++;
-    this.mood--;
-    this.bankAccount += 10;
+  ageUp(interval) {
+    this.age += interval;
+    this.height += interval;
+    this.weight += interval;
+    this.mood += interval;
+    this.bankAccount += 10 * interval;
+  }
+
+  buyHamster(hamster) {
+    this.hamsters.push(hamster);
+    this.mood += 10;
+    this.bankAccount -= hamster.getPrice();
   }
 }
+
+// Instantiate a new Person named Timmy
+let timmy = new Person("Timmy");
+
+// Age Timmy five years
+timmy.ageUp(5);
+
+// Have Timmy eat five times
+timmy.eat(5);
+
+// Have Timmy exercise five times
+timmy.exercise(5);
+
+// Age Timmy 9 years
+timmy.ageUp(9);
+
+// Create a hamster named Gus
+let gus = new Hamster("Gus");
+
+// Set Gus's owner to the string "Timmy"
+gus.owner = "Timmy";
+
+// Have Timmy buy Gus;
+timmy.buyHamster(gus);
+
+// Age Timmy 15 years
+timmy.ageUp(15);
+
+// Have Timmy eat twice
+timmy.eat(2);
+
+// Have Timmy exercise twice
+timmy.exercise(2);
