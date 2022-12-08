@@ -7,12 +7,13 @@
 
 // We don't need keywords like let, const, or var to declare fields
 
+///////////////////////////////////////////////////////////////////////
 // Create Hamster class. Set name from parameter in constructor method
 class Hamster {
-  static price = 15;
-  constructor(name, owner = "") {
+  constructor(name, owner = "", price = 15) {
     this.name = name;
     this.owner = owner;
+    this.price = price;
   }
 
   wheelRun() {
@@ -27,7 +28,7 @@ class Hamster {
     return this.price;
   }
 }
-
+//////////////////////////
 // Create Person class
 class Person {
   constructor(
@@ -75,9 +76,14 @@ class Person {
   }
 
   buyHamster(hamster) {
-    this.hamsters.push(hamster);
-    this.mood += 10;
-    this.bankAccount -= hamster.getPrice();
+    if (this.bankAccount >= hamster.getPrice()) {
+      this.hamsters.push(hamster);
+      this.mood += 10;
+      this.bankAccount -= hamster.getPrice();
+    } else
+      console.log(
+        "You do not have enough money to purchase a hamster. Get a job!"
+      );
   }
 }
 
@@ -101,6 +107,9 @@ let gus = new Hamster("Gus");
 
 // Set Gus's owner to the string "Timmy"
 gus.owner = "Timmy";
+gus.eatFood();
+gus.wheelRun();
+console.log(gus.getPrice());
 
 // Have Timmy buy Gus;
 timmy.buyHamster(gus);
@@ -113,3 +122,50 @@ timmy.eat(2);
 
 // Have Timmy exercise twice
 timmy.exercise(2);
+
+///////////////////////////////////////
+// Chef Make Dinners
+// Chef should be a factory of Dinner
+
+// NOTE -- The factory function pattern is similar to constructors, but instead of using new to create an object, factory functions simply set up and return the new object when you call the function.
+
+// For reading purposes
+console.log("-----------------------------");
+
+class Dinner {
+  constructor(appetizer, entree, dessert) {
+    this.appetizer = appetizer;
+    this.entree = entree;
+    this.dessert = dessert;
+  }
+}
+
+// Add a method on chef that takes three arguments and returns a new Dinner based on those arguments.
+class Chef {
+  createNewDinner(arg1, arg2, arg3) {
+    return new Dinner(arg1, arg2, arg3);
+  }
+}
+
+// Have the Chef create 3 dinners
+let fastFood = new Chef().createNewDinner(
+  "french fries",
+  "big mac",
+  "chocolate milkshake"
+);
+
+let doorDash = new Chef().createNewDinner(
+  "onion rings",
+  "chicken caesar wrap",
+  "lava cake"
+);
+
+let fancyDinner = new Chef().createNewDinner(
+  "crab cakes",
+  "wagyu steak",
+  "courvoisier"
+);
+// Log the dinners
+console.log(fastFood);
+console.log(doorDash);
+console.log(fancyDinner);
